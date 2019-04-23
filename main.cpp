@@ -3,7 +3,7 @@
 #include <fstream>
 #include <string>
 using namespace std;
-
+const int employee_num = 10000;
 // database structure
 struct emplyee_inf {
   string id;
@@ -15,10 +15,75 @@ struct emplyee_inf {
   string email;
   string address;
   string grade;
-} database[50];
+} database[empolyee_num];
 
+char selection_menu()
+{
+	char choice;
+
+	// print selection meun
+	cout << "**************************************" << endl;
+	cout << "* Welcome to Staff Management System *" << endl;
+  cout << "**************************************" << endl;
+	cout << "1. Import New Employee's Information" << endl;
+	cout << "2. Search for Employee's Information" << endl;
+	cout << "3. Edit Employee's Information" << endl;
+	cout << "4. Search for Employee's Salary" << endl;
+	cout << "5. Search for Employee's grade" << endl;
+	cout << "6. Delete Resigned Employee's Information" << endl;
+	cout << "0. Quit. " << endl;
+	cout << "Please enter your choice: ";
+
+	// read user selection
+	cin >> choice;
+	cout << endl;
+
+	return choice;
+}
 // main program
-int main() {
+int main()
+{
+	char choice = selection_menu();
+	while (choice != '0')
+	{
+		switch (choice)
+		{
+			case '1':
+				break;
+
+			case '2':
+				break;
+
+			case '3':
+
+				break;
+
+			case '4':
+
+				break;
+
+			case '5':
+
+				break;
+
+			case '6':
+
+				break;
+
+			default:
+				cout << "Invalid input!" << endl;
+		}
+		choice = selection_menu();
+	}
+
+	cout << "Goodbye!" << endl << endl;
+
+
+	return 0;
+}
+
+// import information program
+int import_information() {
   int i, j, k, pos;
   ifstream input;
   string input_data = "database.txt", line, temp;
