@@ -1,35 +1,146 @@
-// import libraries
+// import library
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 using namespace std;
-const int employee_num = 10000;
-// database structure
-struct emplyee_inf {
-  string id;
-  string name;
-  string birthday;
-  string role;
-  string salary;
-  string date_of_employment;
-  string email;
-  string address;
-  string grade;
-} database[empolyee_num];
 
-char selection_menu()
-{
+// global variable
+string input_file = "database.txt";
+
+// database structure
+struct employee_inf {
+	string id;
+	string name;
+	string birthday;
+	string role;
+	string salary;
+	string date_of_employment;
+	string email;
+	string address;
+	string grade;
+};
+
+// function header
+int import_information(vector<employee_inf> &database);
+char selection_menu();
+void list_database(vector<employee_inf> &database, int size_database);
+
+// main program
+int main() {
+	vector<employee_inf> database;
+	int size_database;
+
+	size_database = import_information(database);
+	char choice = selection_menu();
+	while (choice != '0') {
+		switch (choice) {
+		case '1':
+			list_database(database, size_database);
+			break;
+		case '2':
+			break;
+		case '3':
+			break;
+		case '4':
+			break;
+		case '5':
+			break;
+		case '6':
+			break;
+		default:
+			cout << "Invalid input!" << endl;
+		}
+		choice = selection_menu();
+	}
+
+	cout << "Goodbye!" << endl;
+
+	return 0;
+}
+
+// function ----------------------------------------
+
+// import database
+int import_information(vector<employee_inf> &database) {
+	int i = NULL, j, k;
+	ifstream input;
+	string line, temp;
+
+	input.open(input_file);
+	// check existence of input file
+	if (input.is_open()) {
+		i = 0;
+		// get line from input file
+		while (getline(input, line)) {
+			database.push_back(employee_inf());
+			temp = "";
+			k = 0;
+			//loop over line
+			for (j = 0; j < line.length(); j++) {
+				// insert parameters
+				if (line.at(j) != ',') {
+					temp.push_back(line.at(j));
+				}
+				else {
+					switch (k) {
+					case 0:
+						database[i].id = temp;
+						break;
+					case 1:
+						database[i].name = temp;
+						break;
+					case 2:
+						database[i].birthday = temp;
+						break;
+					case 3:
+						database[i].role = temp;
+						break;
+					case 4:
+						database[i].salary = temp;
+						break;
+					case 5:
+						database[i].date_of_employment = temp;
+						break;
+					case 6:
+						database[i].email = temp;
+						break;
+					case 7:
+						database[i].address = temp;
+						break;
+					}
+					temp = "";
+					k++;
+				}
+			}
+			database[i].grade = temp;
+			i++;
+		}
+	}
+	else {
+		cout << "Input file does not exist." << endl;
+	}
+
+	if (i == NULL) {
+		cout << "Database is empty." << endl;
+	}
+
+	return i;
+}
+
+// menu
+char selection_menu() {
 	char choice;
 
-	// print selection meun
+	// print menu
 	cout << "**************************************" << endl;
 	cout << "* Welcome to Staff Management System *" << endl;
-  cout << "**************************************" << endl;
+	cout << "**************************************" << endl;
 	cout << "1. Import New Employee's Information" << endl;
 	cout << "2. Search for Employee's Information" << endl;
 	cout << "3. Edit Employee's Information" << endl;
 	cout << "4. Search for Employee's Salary" << endl;
-	cout << "5. Search for Employee's grade" << endl;
+	cout << "5. Search for Employee's Grade" << endl;
 	cout << "6. Delete Resigned Employee's Information" << endl;
 	cout << "0. Quit. " << endl;
 	cout << "Please enter your choice: ";
@@ -40,108 +151,20 @@ char selection_menu()
 
 	return choice;
 }
-// main program
-int main()
-{
-	char choice = selection_menu();
-	while (choice != '0')
-	{
-		switch (choice)
-		{
-			case '1':
-				break;
 
-			case '2':
-				break;
+// menu function ----------
 
-			case '3':
 
-				break;
-
-			case '4':
-
-				break;
-
-			case '5':
-
-				break;
-
-			case '6':
-
-				break;
-
-			default:
-				cout << "Invalid input!" << endl;
-		}
-		choice = selection_menu();
+void list_database(vector<employee_inf> &database, int size_database) {
+	for (int i = 0; i < size_database; i++) {
+		cout << database[i].id << '\t'
+			<< database[i].name << '\t'
+			<< database[i].birthday << '\t'
+			<< database[i].role << '\t'
+			<< database[i].salary << '\t'
+			<< database[i].date_of_employment << '\t'
+			<< database[i].email << '\t'
+			<< database[i].address << '\t'
+			<< database[i].grade << endl;
 	}
-
-	cout << "Goodbye!" << endl << endl;
-
-
-	return 0;
-}
-
-// import information program
-int import_information() {
-  int i, j, k, pos;
-  ifstream input;
-  string input_data = "database.txt", line, temp;
-
-  input.open(input_data);
-  // check input file exists
-  if (input.is_open()) {
-    i = 0;
-    // get line from input file
-    while (getline(input, line)) {
-      temp = "";
-      k = 0;
-      // loop over line
-      for (j = 0; j < line.length(); j++) {
-        // insert parameters
-        if (line.at(j) != ',' && j != line.length()-1) {
-          temp.push_back(line.at(j));
-        }
-        else {
-          switch (k) {
-            case 0: { database[i].id = temp;
-                      break;
-                    } 
-            case 1: { database[i].name = temp;
-                      break;
-                    } 
-            case 2: { database[i].birthday = temp;
-                      break;
-                    } 
-            case 3: { database[i].role = temp;
-                      break;
-                    } 
-            case 4: { database[i].salary = temp;
-                      break;
-                    } 
-            case 5: { database[i].date_of_employment = temp;
-                      break;
-                    } 
-            case 6: { database[i].email = temp;
-                      break;
-                    } 
-            case 7: { database[i].address = temp;
-                      break;
-                    } 
-            case 8: { database[i].grade = temp;
-                      break;
-                    } 
-          }
-          temp = "";
-          k++;
-        }
-      }
-      i++;
-    }
-  }
-  else {
-    cout << database << " does not exist." << endl;
-  }
-
-  return 0;
 }
