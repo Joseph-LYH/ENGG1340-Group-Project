@@ -48,6 +48,8 @@ int main() {
 			break;
 		case '6':
 			break;
+		case '7':
+			break;
 		default:
 			cout << "Invalid input!" << endl;
 		}
@@ -136,13 +138,14 @@ char selection_menu() {
 	cout << "**************************************" << endl;
 	cout << "* Welcome to Staff Management System *" << endl;
 	cout << "**************************************" << endl;
-	cout << "1. Import New Employee's Information" << endl;
-	cout << "2. Search for Employee's Information" << endl;
-	cout << "3. Edit Employee's Information" << endl;
-	cout << "4. Search for Employee's Salary" << endl;
-	cout << "5. Search for Employee's Grade" << endl;
-	cout << "6. Delete Resigned Employee's Information" << endl;
-	cout << "0. Quit. " << endl;
+	cout << "1. List all Employees' Information" << endl;
+	cout << "2. Import New Employee's Information" << endl;
+	cout << "3. Search for Employee's Information" << endl;
+	cout << "4. Edit Employee's Information" << endl;
+	cout << "5. Search for Employee's Salary" << endl;
+	cout << "6. Search for Employee's Grade" << endl;
+	cout << "7. Delete Resigned Employee's Information" << endl;
+	cout << "0. Quit" << endl;
 	cout << "Please enter your choice: ";
 
 	// read user selection
@@ -154,7 +157,7 @@ char selection_menu() {
 
 // menu function ----------
 
-
+// list all employee
 void list_database(vector<employee_inf> &database, int size_database) {
 	for (int i = 0; i < size_database; i++) {
 		cout << database[i].id << '\t'
