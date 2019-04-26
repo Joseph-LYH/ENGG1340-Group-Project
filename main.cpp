@@ -28,6 +28,7 @@ char selection_menu();
 void list_database(vector<employee_inf>& database);
 void add_employee(vector<employee_inf>& database);
 void search_employee(vector<employee_inf>& database);
+void rank_employee(vector<employee_inf>& database);
 void edit_employee(vector<employee_inf>& database);
 
 bool check_dup_id(vector<employee_inf>& database, string id);
@@ -175,8 +176,8 @@ char selection_menu() {
 	cout << "2. Add New Employee's Information" << endl;
 	cout << "3. Search for Employee's Information" << endl;
 	cout << "4. Edit Employee's Information" << endl;
-	cout << "5. Search for Employee's Salary" << endl;
-	cout << "6. Search for Employee's Grade" << endl;
+	cout << "5. Rank the Employee's Salary" << endl;
+	cout << "6. Record the Employee's workload" << endl;
 	cout << "7. Delete Employee's Information" << endl;
 	cout << "0. Quit" << endl;
 	cout << "Please enter your choice: ";
@@ -374,7 +375,41 @@ void edit_employee(vector<employee_inf>& database) {
 		system("pause");
 	}
 }
-
+// rank salary
+void rank_employee(vector<employee_inf>& database) {
+  int temp;
+  for (unsigned i = 0; i < database.size(); i++) {
+    for (unsigned j = i+1; j < database.size()-1; j++) {
+      if (database[i].salary > database[j].salary){
+        temp=i;
+        database[temp]=database[i];
+        database[i]=database[j];
+        database[j]=database[temp];
+      }
+    }
+  }
+  for (unsigned i = 0; i < database.size(); i++) {
+      cout << database[i].id << '\t'
+      << database[i].name << '\t'
+      << database[i].birthday << '\t'
+      << database[i].role << '\t'
+      << database[i].salary << '\t'
+      << database[i].date_of_employment << '\t'
+      << database[i].email << '\t'
+      << database[i].address << '\t'
+      << database[i].grade << endl;
+  }
+  for (unsigned i = 0; i < database.size(); i++) {
+      for (unsigned j = i+1; j < database.size()-1; j++) {
+        if ((database[i].id < database[j].id) ){
+          temp=i;
+          database[temp]=database[i];
+          database[i]=database[j];
+          database[j]=database[temp];
+        }
+      }
+    }
+}
 // miscilleaneous function -----
 bool check_dup_id(vector<employee_inf>& database, string id) {
 	for (unsigned i = 0; i < database.size(); i++) {
