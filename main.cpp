@@ -6,7 +6,7 @@
 using namespace std;
 
 // global variable
-const string input_file = "database.txt";
+const char input_file[20] = "database.txt";
 
 // database structure
 struct employee_inf {
@@ -23,10 +23,12 @@ struct employee_inf {
 
 // function header
 void import_information(vector<employee_inf>& database);
+void export_information(vector<employee_inf>& database);
 char selection_menu();
 void list_database(vector<employee_inf>& database);
 void add_employee(vector<employee_inf>& database);
 void search_employee(vector<employee_inf>& database);
+void edit_employee(vector<employee_inf>& database);
 
 bool check_dup_id(vector<employee_inf>& database, string id);
 
@@ -35,6 +37,7 @@ int main() {
 	vector<employee_inf> database;
 
 	import_information(database);
+
 	char choice = selection_menu();
 	while (choice != '0') {
 		switch (choice) {
@@ -48,6 +51,7 @@ int main() {
 			search_employee(database);
 			break;
 		case '4':
+			edit_employee(database);
 			break;
 		case '5':
 			break;
@@ -63,6 +67,8 @@ int main() {
 
 	cout << "Goodbye!" << endl;
 
+	export_information(database);
+
 	return 0;
 }
 
@@ -74,7 +80,7 @@ void import_information(vector<employee_inf>& database) {
 	ifstream input;
 	string line, temp;
 
-	input.open("database.txt");
+	input.open(input_file);
 	// check existence of input file
 	if (input.is_open()) {
 		i = 0;
@@ -123,6 +129,8 @@ void import_information(vector<employee_inf>& database) {
 			database[i].grade = temp;
 			i++;
 		}
+
+		input.close();
 	}
 	else {
 		cout << "Input file does not exist." << endl;
@@ -131,6 +139,27 @@ void import_information(vector<employee_inf>& database) {
 	if (i == 0) {
 		cout << "Database is empty." << endl;
 	}
+}
+
+// export database
+void export_information(vector<employee_inf>& database) {
+	ofstream output;
+
+	output.open(input_file, ofstream::out | ofstream::trunc);
+	if (output.is_open()) {
+		for (unsigned i = 0; i < database.size(); i++) {
+			output << database[i].id << ','
+				<< database[i].name << ','
+				<< database[i].birthday << ','
+				<< database[i].role << ','
+				<< database[i].salary << ','
+				<< database[i].date_of_employment << ','
+				<< database[i].email << ','
+				<< database[i].address << ','
+				<< database[i].grade << endl;
+		}
+	}
+
 }
 
 // menu
@@ -148,7 +177,7 @@ char selection_menu() {
 	cout << "4. Edit Employee's Information" << endl;
 	cout << "5. Search for Employee's Salary" << endl;
 	cout << "6. Search for Employee's Grade" << endl;
-	cout << "7. Delete Resigned Employee's Information" << endl;
+	cout << "7. Delete Employee's Information" << endl;
 	cout << "0. Quit" << endl;
 	cout << "Please enter your choice: ";
 
@@ -232,7 +261,7 @@ void add_employee(vector<employee_inf>& database) {
 			break;
 		}
 	}
-	
+
 }
 
 // search employee
@@ -264,6 +293,88 @@ void search_employee(vector<employee_inf>& database) {
 	}
 }
 
+// edit employee
+void edit_employee(vector<employee_inf>& database) {
+	string id, temp;
+	int num;
+	bool found = false;
+
+	cout << "Please input the ID to be searched: ";
+	cin >> id;
+
+	for (unsigned i = 0; i < database.size(); i++) {
+		if (database[i].id == id) {
+			found = true;
+
+			cout << database[i].id << '\t'
+				<< database[i].name << '\t'
+				<< database[i].birthday << '\t'
+				<< database[i].role << '\t'
+				<< database[i].salary << '\t'
+				<< database[i].date_of_employment << '\t'
+				<< database[i].email << '\t'
+				<< database[i].address << '\t'
+				<< database[i].grade << endl;
+
+			cout << "What do you want to change?:" << endl;
+			cout << "1. ID" << endl;
+			cout << "2. Name" << endl;
+			cout << "3. Birthday" << endl;
+			cout << "4. Role" << endl;
+			cout << "5. Salary" << endl;
+			cout << "6. Date of Employment" << endl;
+			cout << "7. Email" << endl;
+			cout << "8. Address" << endl;
+			cout << "9. Grade" << endl;
+			cin >> num;
+
+			switch (num) {
+			case 1:
+				cout << "What do you want to change the ID to?: " << endl;
+				cin >> temp;
+				database[i].id = temp;
+			case 2:
+				cout << "What do you want to change the Name to?: " << endl;
+				cin >> temp;
+				database[i].name = temp;
+			case 3:
+				cout << "What do you want to change the Birthday to?: " << endl;
+				cin >> temp;
+				database[i].birthday = temp;
+			case 4:
+				cout << "What do you want to change the Role to?: " << endl;
+				cin >> temp;
+				database[i].role = temp;
+			case 5:
+				cout << "What do you want to change the Salary to?: " << endl;
+				cin >> temp;
+				database[i].salary = temp;
+			case 6:
+				cout << "What do you want to change the Date of Employment to?: " << endl;
+				cin >> temp;
+				database[i].date_of_employment = temp;
+			case 7:
+				cout << "What do you want to change the Email to?: " << endl;
+				cin >> temp;
+				database[i].email = temp;
+			case 8:
+				cout << "What do you want to change the Address to?: " << endl;
+				cin >> temp;
+				database[i].address = temp;
+			case 9:
+				cout << "What do you want to change the Grade to?: " << endl;
+				cin >> temp;
+				database[i].grade = temp;
+			}
+		}
+	}
+
+	if (!found) {
+		cout << "ID is not found." << endl;
+		system("pause");
+	}
+}
+
 // miscilleaneous function -----
 bool check_dup_id(vector<employee_inf>& database, string id) {
 	for (unsigned i = 0; i < database.size(); i++) {
@@ -273,3 +384,5 @@ bool check_dup_id(vector<employee_inf>& database, string id) {
 	}
 	return false;
 }
+
+
