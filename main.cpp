@@ -19,6 +19,7 @@ struct employee_inf {
 	string email;
 	string address;
 	string grade;
+	string job;
 };
 
 // function header
@@ -29,7 +30,9 @@ void list_database(vector<employee_inf>& database);
 void add_employee(vector<employee_inf>& database);
 void search_employee(vector<employee_inf>& database);
 void edit_employee(vector<employee_inf>& database);
-
+void recond_employeejob(vector<employee_inf>& database);
+void rank_employee(vector<employee_inf>& database);
+void delete_employee(vector<employee_inf>& database);
 bool check_dup_id(vector<employee_inf>& database, string id);
 
 // main program
@@ -54,10 +57,13 @@ int main() {
 			edit_employee(database);
 			break;
 		case '5':
+		  rank_employee(database);
 			break;
 		case '6':
+		  recond_employeejob(database);
 			break;
 		case '7':
+      delete_employee(database);
 			break;
 		default:
 			cout << "Invalid input!" << endl;
@@ -175,8 +181,8 @@ char selection_menu() {
 	cout << "2. Add New Employee's Information" << endl;
 	cout << "3. Search for Employee's Information" << endl;
 	cout << "4. Edit Employee's Information" << endl;
-	cout << "5. Search for Employee's Salary" << endl;
-	cout << "6. Search for Employee's Grade" << endl;
+	cout << "5. Rank the Employee's Salary" << endl;
+	cout << "6. Recond Employee's Job" << endl;
 	cout << "7. Delete Employee's Information" << endl;
 	cout << "0. Quit" << endl;
 	cout << "Please enter your choice: ";
@@ -374,7 +380,40 @@ void edit_employee(vector<employee_inf>& database) {
 		system("pause");
 	}
 }
+// rank employee
+void rank_employee(vector<employee_inf>& database){
+	
+}
+// delete employee
+void delete_employee(vector<employee_inf>& database){
 
+}
+// recond_employeejob
+void recond_employeejob(vector<employee_inf>& database) {
+	string id,temp;
+	cin >> id;
+	for (unsigned i=0;i<database.size();i++){
+		if (database[i].id==id){
+			if (database[i].job==""){
+				cout << "What jobs do you arrange for the employee?" << "\t";
+			  cin >> database[i].job;
+			}
+			else{
+				cout << "Do the employee finished what he is working on hand? (y/n):" <<"\t";
+				cin >> temp;
+				if (temp == "n") {
+					cout << "What jobs do you arrange for the employee?" << "\t";
+				  cin >> database[i].job;
+				}
+				if (temp == "y") {
+					database[i].job.clear();
+					cout << "What jobs do you arrange for the employee?" << "\t";
+				  cin >> database[i].job;
+				}
+			 }
+			}
+		}
+}
 // miscilleaneous function -----
 bool check_dup_id(vector<employee_inf>& database, string id) {
 	for (unsigned i = 0; i < database.size(); i++) {
@@ -384,5 +423,4 @@ bool check_dup_id(vector<employee_inf>& database, string id) {
 	}
 	return false;
 }
-
 
