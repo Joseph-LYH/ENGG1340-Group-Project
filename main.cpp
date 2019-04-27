@@ -183,8 +183,6 @@ char selection_menu() {
 
 	// read user selection
 	cin >> choice;
-	cout << endl;
-
 	return choice;
 }
 
