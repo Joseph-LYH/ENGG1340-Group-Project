@@ -72,7 +72,7 @@ int main() {
 
 	cout << "Goodbye!" << endl;
 
-	//export_information(database);
+	export_information(database);
 
 	return 0;
 }
