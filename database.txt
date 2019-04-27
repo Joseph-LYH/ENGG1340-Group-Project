@@ -1,4 +1,3 @@
-id,name,birthday,role,salary,date_of_employment,email,address
 3000,Lam Yuen Ho,19/12/1999,Technical support,10000,19/05/2016,josephlyh1@yahoo.com,Swire Hall
 3001,Lui Wing Ming,22/07/1990,Technical support,10000,19/05/2016,Jackylww@hotmail.com,Wan Chai
 3002,Lui Wing Wong,14/05/1989,Systems analyst,15000,12/03/2013,NGTWING@gmail.com,Ho Man Tin
