@@ -7,7 +7,7 @@ using namespace std;
 
 // global variable
 const char input_file[20] = "database.txt";
-
+string nojob = "no work";
 // database structure
 struct employee_inf {
 	string id;
@@ -18,6 +18,7 @@ struct employee_inf {
 	string date_of_employment;
 	string email;
 	string address;
+	string job;
 };
 
 // function header
@@ -32,6 +33,7 @@ void search_employee(vector<employee_inf>& database);
 void rank_employee(vector<employee_inf>& database);
 void edit_employee(vector<employee_inf>& database);
 void delete_employee(vector<employee_inf>& database);
+void reond_employee(vector<employee_inf>& database);
 	// miscellaneous function
 void print_table();
 bool check_dup_id(vector<employee_inf>& database, string id);
@@ -63,6 +65,8 @@ int main() {
 		case '6':
 			delete_employee(database);
 			break;
+		case '7':
+			reond_employee(database);
 		default:
 			cout << "Invalid input!" << endl;
 			system("pause");
@@ -122,6 +126,8 @@ void import_information(vector<employee_inf>& database) {
 					case 6:
 						database[i].email = temp;
 						break;
+					case 7: 
+						database[i].job=tmep;
 					}
 					temp = "";
 					k++;
@@ -156,7 +162,8 @@ void export_information(vector<employee_inf>& database) {
 				<< database[i].salary << ','
 				<< database[i].date_of_employment << ','
 				<< database[i].email << ','
-				<< database[i].address << endl;
+				<< database[i].address << ','
+			        << database[i].job << endl;
 		}
 	}
 
@@ -177,6 +184,7 @@ char selection_menu() {
 	cout << "4. Edit Employee's Information" << endl;
 	cout << "5. Rank the Employee's Salary" << endl;
 	cout << "6. Delete Employee's Information" << endl;
+	cout << "7. Recond the Employee job" << endl;
 	cout << "0. Quit" << endl;
 	cout << "Please enter your choice: ";
 
@@ -200,7 +208,8 @@ void list_database(vector<employee_inf>& database) {
 			<< database[i].salary << '\t'
 			<< database[i].date_of_employment << '\t'
 			<< database[i].email << '\t'
-			<< database[i].address << endl;
+			<< database[i].address << '\t'
+			<< database[i].job << endl;
 	}
 	system("pause");
 }
@@ -241,6 +250,7 @@ void add_employee(vector<employee_inf>& database) {
 		getline(cin, database[size].email);
 		cout << "Please enter the Address: ";
 		getline(cin, database[size].address);
+		database[size].job= nojob;
 		cout << endl;
 
 		print_table();
@@ -251,7 +261,8 @@ void add_employee(vector<employee_inf>& database) {
 			<< database[size].salary << '\t'
 			<< database[size].date_of_employment << '\t'
 			<< database[size].email << '\t'
-			<< database[size].address << endl;
+			<< database[size].address <<'\t'
+			<< database[i].job << endl;
 
 		while (true) {
 			cout << "Is the information correct? (y/n): ";
@@ -296,7 +307,8 @@ void search_employee(vector<employee_inf>& database) {
 				<< database[i].salary << '\t'
 				<< database[i].date_of_employment << '\t'
 				<< database[i].email << '\t'
-				<< database[i].address << endl;
+				<< database[i].address <<'\t'
+				<< database[i].job << endl;
 			
 			system("pause");
 		}
@@ -469,7 +481,40 @@ void delete_employee(vector<employee_inf>& database) {
 		cout << "ID not found." << endl;
 	}
 }
-
+   //recond employee job
+void recond_employeejob(vector<employee_inf>& database) {
+	string id,temp;
+	cout << "Please input the ID: ";
+	cin >> id;
+	bool found = false;
+	for (unsigned i=0;i<database.size();i++){
+		if (database[i].id==id){
+			found=true;
+			if (database[i].job=="no work"){
+				database[i].job.clear();
+				cout << "What jobs do you arrange for the employee?" ;
+			        getline(cin,database[i].job);
+			}
+			else{
+				cout << "Do the employee finished what he is working on hand? (y/n):";
+				cin >> temp;
+				if (temp == "n") {
+			          cout << "What jobs do you arrange for the employee?" ;
+				  getline(cin,database[i].job);
+				}
+				if (temp == "y") {
+					database[i].job.clear();
+					cout << "What jobs do you arrange for the employee?";
+				        getline(cin,database[i].job);
+				}
+			 }
+			}
+			if (!found) {
+				cout << "ID is not found." << endl;
+				system("pause");
+			}
+		}
+}
 // miscilleaneous function
 void print_table() {
 	cout << "ID\tName\tBirthday\tRole\tSalary\tDate of Employment\tEmail\tAddress" << endl;
