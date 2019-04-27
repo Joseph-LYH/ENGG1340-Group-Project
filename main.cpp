@@ -162,7 +162,7 @@ void export_information(vector<employee_inf>& database) {
 				<< database[i].date_of_employment << ','
 				<< database[i].email << ','
 				<< database[i].address << ','
-				<< database[i].grade << endl;
+				<< database[i].job << endl;
 		}
 	}
 
@@ -207,7 +207,7 @@ void list_database(vector<employee_inf>& database) {
 			<< database[i].date_of_employment << '\t'
 			<< database[i].email << '\t'
 			<< database[i].address << '\t'
-			<< database[i].grade << endl;
+			<< database[i].job << endl;
 	}
 	system("pause");
 }
@@ -388,29 +388,35 @@ void rank_employee(vector<employee_inf>& database){
 void delete_employee(vector<employee_inf>& database){
 
 }
-// recond_employeejob
 void recond_employeejob(vector<employee_inf>& database) {
 	string id,temp;
+	cout << "Please input the ID: ";
 	cin >> id;
+	bool found = false;
 	for (unsigned i=0;i<database.size();i++){
 		if (database[i].id==id){
+			found=true;
 			if (database[i].job==""){
-				cout << "What jobs do you arrange for the employee?" << "\t";
+				cout << "What jobs do you arrange for the employee?" ;
 			  cin >> database[i].job;
 			}
 			else{
-				cout << "Do the employee finished what he is working on hand? (y/n):" <<"\t";
+				cout << "Do the employee finished what he is working on hand? (y/n):";
 				cin >> temp;
 				if (temp == "n") {
-					cout << "What jobs do you arrange for the employee?" << "\t";
+					cout << "What jobs do you arrange for the employee?" ;
 				  cin >> database[i].job;
 				}
 				if (temp == "y") {
 					database[i].job.clear();
-					cout << "What jobs do you arrange for the employee?" << "\t";
+					cout << "What jobs do you arrange for the employee?";
 				  cin >> database[i].job;
 				}
 			 }
+			}
+			if (!found) {
+				cout << "ID is not found." << endl;
+				system("pause");
 			}
 		}
 }
